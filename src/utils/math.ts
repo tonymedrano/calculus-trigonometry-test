@@ -32,11 +32,13 @@ const slope = (centerX: number, centerY: number, radius: number, angle: number) 
     for (let i = 0; i < (radius * 4); i++) {
         const lineY1 = perpM * i + tc
         const lineY2 = perpM * i - 1 + tc
-
+console.log('====================================');
+console.log(i);
+console.log('====================================');
         return {
             x: i, 
             y: lineY1, 
-            x1: i - 1, 
+            x2: i - 1, 
             y2: lineY2,
             dx,
             dy,

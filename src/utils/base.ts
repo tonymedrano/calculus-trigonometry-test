@@ -56,7 +56,7 @@ const clear = (ctx: any, width: number, height: number) => {
     ctx.save()
     ctx.scale(1,-1)
 	ctx.setTransform(1, 0, 0, 1, 0, 0)
-	ctx.clearRect(0, 0, width, height)
+    ctx.clearRect(0, 0, width, height)
 	ctx.restore()
 }
 
