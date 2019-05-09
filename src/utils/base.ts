@@ -43,11 +43,11 @@ const line = (ctx: any, x0: number, y0: number, x1: number, y1: number, color = 
     ctx.restore()
 }
 
-const dot = (ctx: any, x: number, y: number, color = 'red') => {
+const dot = (ctx: any, x: number, y: number, radius: any, color = 'red') => {
     ctx.save()
     ctx.fillStyle = color
     ctx.beginPath()
-    ctx.arc(x, y, 2, 0, Math.PI * 2, false)
+    ctx.arc(x, y, radius, 0, Math.PI * 2, false)
     ctx.fill()
     ctx.restore()
 }

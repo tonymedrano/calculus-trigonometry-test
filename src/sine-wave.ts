@@ -4,7 +4,7 @@ const showAxes = (ctx:any) => {
     let xMin = 0
     
     ctx.beginPath()
-    ctx.strokeStyle = "rgb(128,128,128)"
+    ctx.strokeStyle = 'rgb(128,128,128)'
     
     // X-Axis
     ctx.moveTo(xMin, height/2)
@@ -40,9 +40,9 @@ const plotSine = (ctx:any, xOffset:any, yOffset:any) => {
 
     ctx.beginPath()
     ctx.lineWidth = 2
-    ctx.strokeStyle = "rgb(66,44,255)"
+    ctx.strokeStyle = 'rgb(66,44,255)'
 
-    // console.log("Drawing point...")
+    // console.log('Drawing point...')
     // drawPoint(ctx, yOffset+step)
     
     let x = 4
@@ -54,11 +54,11 @@ const plotSine = (ctx:any, xOffset:any, yOffset:any) => {
         y = height/2 + amplitude * Math.sin((x+xOffset)/frequency)
         ctx.lineTo(x, y)
         x++
-        // console.log("x="+x+" y="+y)
+        // console.log('x='+x+' y='+y)
     }
     ctx.stroke()
     ctx.save()
-    console.log("Drawing point at y=" + y)
+    console.log('Drawing point at y=' + y)
     drawPoint(ctx, y)
     ctx.stroke()
     ctx.restore()

@@ -21,32 +21,38 @@ const position = (centerX: number, centerY: number, angle: number, radius: numbe
     }
 }
 
-const slope = (centerX: number, centerY: number, radius: number, angle: number) => {
+const slope = (centerX: number, centerY: number, radius: number, angle: number, callback: any) => {
     const x = centerX + radius * (Math.cos(angle))
     const y = centerY + radius * (Math.sin(angle))
     const dx = x - centerX
     const dy = y - centerY
     const m = dy / dx
     const perpM = -1 / m
-    const tc = y - perpM * x
-    for (let i = 0; i < (radius * 4); i++) {
+    const tc = y - perpM * x;
+    for (let i = 0; i < 600; i++) {
         const lineY1 = perpM * i + tc
         const lineY2 = perpM * i - 1 + tc
-console.log('====================================');
-console.log(i);
-console.log('====================================');
-        return {
-            x: i, 
-            y: lineY1, 
-            x2: i - 1, 
-            y2: lineY2,
-            dx,
-            dy,
-            m,
-            perpM,
-            tc
+
+        if (typeof callback === 'function') {
+            callback({
+                x0: i,
+                y0: lineY1,
+                x1: i - 1,
+                y1: lineY2
+            })
         }
     }
+
+    return {
+        x,
+        y,
+        dx,
+        dy,
+        m,
+        perpM,
+        tc
+    }
+
 }
 
 

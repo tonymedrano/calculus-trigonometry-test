@@ -31,6 +31,10 @@ const radius: number = centerX * .75
 let speed: number = 0.01
 let angle: number = 0
 
+let xAxis = Math.floor(height/2);
+   let yAxis = Math.floor(width/4);
+   let unit: number = 60
+
 //. Render ---->
 const _update = () => {
 
@@ -48,37 +52,56 @@ const _update = () => {
   ctx.save()
   ctx.beginPath()
   ctx.strokeStyle = colors.purple
-  ctx.arc(angle * 20, easing.linear(pos2.y / .5), 10, 0, 2 * Math.PI)
+  ctx.arc(pos2.x, pos2.y, 10, 0, 2 * Math.PI)
   ctx.stroke()
   ctx.restore()
-  
-  const tan = math.slope(pos.x, pos.y, radius, angle)
 
-  base.line(ctx, tan.x, tan.y, tan.x2, tan.y2)
+  sinewave.run(ctx, angle * 200)
 
-  const textLeft = 40
+  const setting: any = math.slope(centerX, centerY, radius, angle, (position: any) => {
+    base.line(ctx, position.x0, position.y0, position.x1, position.y1, colors.black)
+  })
+
+  let x = yAxis+unit*Math.cos(angle);
+  let y = xAxis+unit*Math.sin(angle);
+
+    for (let i = yAxis; i <= width; i += .5) {
+      x = angle+(-yAxis+i)/unit;
+      y = Math.sin(pos.x);
+      base.line(ctx, centerX, centerY, i, unit*y+xAxis, getRandomColor())
+  }
+
+  base.dot(ctx, setting.x + setting.m, setting.y + setting.m, 8, colors.black)
+
+  const textLeft = 20
   ctx.save()
   ctx.font = '20px Consolas'
-  ctx.fillText('Tangent Line: ', textLeft, 50)
-  ctx.fillText('-----------------', textLeft, 65)
-  ctx.fillText('x: ' + tan.x, textLeft, 100)
-  ctx.fillText('y: ' + tan.y, textLeft, 120)
-  ctx.fillText('dx: ' + tan.dx, textLeft, 140)
-  ctx.fillText('dy: ' + tan.dy, textLeft, 160)
-  ctx.fillText('m: ' + tan.m, textLeft, 180)
-  ctx.fillText('perp m: ' + tan.perpM, textLeft, 200)
-  ctx.fillText('ctx: ' + tan.tc, textLeft, 220)
+  ctx.fillText('Ceneral Setting: ', textLeft, 40)
+  ctx.fillText('-----------------', textLeft, 55)
+  ctx.fillText('centerX: ' + centerX, textLeft, 80)
+  ctx.fillText('centerY: ' + centerY, textLeft, 100)
+  ctx.fillText('angle: ' + angle, textLeft, 120)
+  ctx.fillText('radius: ' + radius, textLeft, 140)
+  ctx.fillText(`pos1: x = ${pos.x},  y = ${pos.y}`, textLeft, 160)
+  ctx.fillText(`pos2: x = ${pos2.x},  y = ${pos2.y}`, textLeft, 180)
+  ctx.fillText('ctx: ' + setting.tc, textLeft, 200)
   ctx.restore()
 
-  sinewave.run(ctx, angle*200)
-  //loop(ctx, width)
-
-  /*   ctx.font = "20px Arial"
-    ctx.fillText(`Line length: ${tangent.toFixed()}`, 10, 50) */
+  ctx.save()
+  ctx.font = '20px Consolas'
+  ctx.fillText('Tangent Line: ', textLeft, 240)
+  ctx.fillText('-----------------', textLeft, 255)
+  ctx.fillText('x: ' + setting.x, textLeft, 280)
+  ctx.fillText('y: ' + setting.y, textLeft, 300)
+  ctx.fillText('dx: ' + setting.dx, textLeft, 320)
+  ctx.fillText('dy: ' + setting.dy, textLeft, 340)
+  ctx.fillText('m: ' + setting.m, textLeft, 360)
+  ctx.fillText('perp m: ' + setting.perpM, textLeft, 380)
+  ctx.fillText('ctx: ' + setting.tc, textLeft, 400)
+  ctx.restore()
 
   //. Update everything! ---->
   angle += speed
-  if (angle > Math.PI * 2) angle = 0
 
   requestAnimationFrame(_update)
 
